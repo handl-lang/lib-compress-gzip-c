@@ -12,10 +12,10 @@
 --- `memfd_create(2)` lives in `bits/mman-shared.h`, outside the headers
 --- sdkgen can collect from directly.
 
-from "../compress" import { Compress, Decompress }
+from "compress" import { Compress, Decompress }
 from "bytes" import * as bytes
-from "../generated/libz-c-linux-x86_64/zlib" import * as zlib
-from "../generated/libc-c-linux-x86_64/unistd" import * as unistd
+from "libz/zlib" import * as zlib
+from "libc/unistd" import * as unistd
 
 --- x86_64 syscall number for memfd_create.
 SYS_MEMFD_CREATE := 319
