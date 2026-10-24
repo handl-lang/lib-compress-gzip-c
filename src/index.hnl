@@ -28,13 +28,10 @@ SEEK_SET := 0
 
 --- Unwrap a generated `Result` — every ffi binding returns
 --- `Result<payload, Errno>`; on `err` we raise with the op name.
-unwrap := (r, what) ~> do {
-  if tag.tag_of(r) == "err" {
-    error.raise("compress-gzip-c: " + what + " failed")
-  } else {
-    tag.untag(r).value
+unwrap := (r, what) ~> match r {
+    err(_): error.raise("compress-gzip-c: " + what + " failed"),
+    _: r.value
   }
-}
 
 --- Concatenate a list of Bytes chunks.
 cat := (chunks) ~> while { xs: chunks, acc: bytes.from_list([]) } {
