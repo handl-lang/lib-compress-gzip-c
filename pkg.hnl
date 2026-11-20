@@ -1,3 +1,11 @@
 -- lib-compress-gzip-c: modules this package provides (entry defaults to
 -- src/index.hnl; N modules resolve to src/<name>/index.hnl).
-{ deps: { compress: "branch:main", libz: "branch:main", libc: "branch:main" }, modules: ["compress-gzip-c"] }
+{
+  deps: { compress: "branch:main", libz: "branch:main", libc: "branch:main" },
+  modules: ["compress-gzip-c"],
+  name: "compress-gzip-c",
+  description: "gzip backend (zlib gz* API over libz) for the compress contract.",
+  license: "MIT",
+  keywords: ["compress", "gzip", "zlib", "backend"],
+  homepage: "https://github.com/handl-lang/lib-compress-gzip-c",
+}

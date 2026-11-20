@@ -1,15 +1,14 @@
 # lib-compress-gzip-c
 
-gzip backend (zlib `gz*` API over `libz`) for the `compress` contract.
-
-Part of the `handl-lang` org split (ADR-0128). History is a `git subtree
-split` of the platform monorepo's `compress-gzip-c/` (via `c`).
+`gzip` backend (zlib `gz*` API over `libz`) for the `compress` contract.
 
 ## Layout
 
 ```text
-src/        the .hnl sources
-pkg.hnl     dependencies, when any: `{ deps: { <name>: "branch:<ref>" } }`
+src/                     the .hnl sources
+pkg.hnl                  package manifest (deps on compress, libz, libc)
+scripts/hnl-gate.sh      the gate
+ci.sh                    bupha entry
 ```
 
 ## Gate
