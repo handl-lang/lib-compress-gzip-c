@@ -10,7 +10,7 @@
 ---
 --- The memfd is created via `libc.syscall(SYS_memfd_create, ...)` since
 --- `memfd_create(2)` lives in `bits/mman-shared.h`, outside the headers
---- sdkgen can collect from directly.
+--- codegen can collect from directly.
 
 from "compress" import { Compress, Decompress }
 from "bytes" import * as bytes
