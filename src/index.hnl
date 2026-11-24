@@ -46,7 +46,7 @@ cat := (chunks) ~> while { xs: chunks, acc: bytes.from_list([]) } {
 drain_fd := (fd) ~> do {
   while { fd: fd, chunks: [] } {
     (fd, chunks) ~> do {
-      chunk = unwrap(unistd.read(fd), "read")
+      chunk := unwrap(unistd.read(fd), "read")
       if bytes.len(chunk) == 0 {
         { out: cat(chunks) }
       } else {
@@ -61,7 +61,7 @@ drain_fd := (fd) ~> do {
 drain_gz := (gz) ~> do {
   while { gz: gz, chunks: [] } {
     (gz, chunks) ~> do {
-      chunk = unwrap(zlib.gzread(gz), "gzread")
+      chunk := unwrap(zlib.gzread(gz), "gzread")
       if bytes.len(chunk) == 0 {
         { out: cat(chunks) }
       } else {
@@ -77,22 +77,22 @@ drain_gz := (gz) ~> do {
 memfd := () ~> unwrap(unistd.syscall(SYS_MEMFD_CREATE, "handl-gzip", 0), "memfd_create")
 
 export compress: Compress := (input) ~> do {
-  fd = memfd()
-  gz = unwrap(zlib.gzdopen(fd, "wb"), "gzdopen")
-  _ = unwrap(zlib.gzwrite(gz, input), "gzwrite")
-  _ = unwrap(zlib.gzflush(gz, Z_FINISH), "gzflush")
-  _ = unwrap(unistd.lseek(fd, 0, SEEK_SET), "lseek")
-  out = drain_fd(fd)
-  _ = zlib.gzclose(gz)
+  fd := memfd()
+  gz := unwrap(zlib.gzdopen(fd, "wb"), "gzdopen")
+  _ := unwrap(zlib.gzwrite(gz, input), "gzwrite")
+  _ := unwrap(zlib.gzflush(gz, Z_FINISH), "gzflush")
+  _ := unwrap(unistd.lseek(fd, 0, SEEK_SET), "lseek")
+  out := drain_fd(fd)
+  _ := zlib.gzclose(gz)
   out
 }
 
 export decompress: Decompress := (input) ~> do {
-  fd = memfd()
-  _ = unwrap(unistd.write(fd, input), "write")
-  _ = unwrap(unistd.lseek(fd, 0, SEEK_SET), "lseek")
-  gz = unwrap(zlib.gzdopen(fd, "rb"), "gzdopen")
-  out = drain_gz(gz)
-  _ = zlib.gzclose(gz)
+  fd := memfd()
+  _ := unwrap(unistd.write(fd, input), "write")
+  _ := unwrap(unistd.lseek(fd, 0, SEEK_SET), "lseek")
+  gz := unwrap(zlib.gzdopen(fd, "rb"), "gzdopen")
+  out := drain_gz(gz)
+  _ := zlib.gzclose(gz)
   out
 }
