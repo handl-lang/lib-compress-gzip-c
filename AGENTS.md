@@ -1,3 +1,30 @@
+# lib-compress-gzip-c
+
+`compress-gzip-c` — the gzip backend for the `compress` contract:
+zlib `gz*` API over `libz`, reached through the C FFI.
+
+## Layout
+
+| path | role |
+| --- | --- |
+| `src/index.hnl` | the backend module (`compress-gzip-c`) |
+| `src/compress-gzip-c.test.hnl` | backend tests |
+| `pkg.hnl` | manifest — deps `compress`, `libz`, `libc` (`branch:main`) |
+| `scripts/hnl-gate.sh` | `.hnl` gate |
+| `workflows/gate.yaml` | CI — shared `handl-gates` campaign |
+
+## Contract
+
+- Implements the `lib-compress` contract over libz's `gz*` functions —
+  needs zlib at runtime via the FFI layer.
+- Pure `.hnl` over `ffi.call`; no Rust crate.
+
+## Verification
+
+```bash
+HNL=../host-cli/target/debug/hnl scripts/hnl-gate.sh
+```
+
 <!-- myco:agent-awareness -->
 
 ## Agent awareness
